@@ -5,7 +5,7 @@ rm(list=ls())
 
 ### Setting directory for '~/Downloads' but can adjust to project folder
 getwd()
-setwd('Downloads')
+setwd('~/Documents/GitHub/Archaeos/')
 
 ### Getting packages set
 require(readxl)
