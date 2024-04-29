@@ -12,8 +12,11 @@ require(readxl)
 require(ggplot2)
 
 ### Read in data as tibble
-d <- read_xlsx('Demosponge Measurements.xlsx',col_names = T)
-str(d)
+d.Demo <- read_xlsx('Demosponge Measurements.xlsx',col_names = T)
+str(d.Demo)
+
+d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
+str(d.Archaeo)
 
 ### Basic stats using same method from ggplot2
 summary(d)
