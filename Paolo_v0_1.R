@@ -19,19 +19,19 @@ d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
 str(d.Archaeo)
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Large_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Large_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Ostia Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Large Incurrent Canal Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Ostia_Diameter,Large_Incurrent_Canal_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Ostia_Diameter,Large_Incurrent_Canal_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Ostia Diameter (',"\U003BC",'m)')) +
@@ -47,19 +47,19 @@ p
 ### Ostia vs Med Incurrent
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Medium_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Medium_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Ostia Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Medium Incurrent Canal Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Ostia_Diameter,Medium_Incurrent_Canal_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Ostia_Diameter,Medium_Incurrent_Canal_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Ostia Diameter (',"\U003BC",'m)')) +
@@ -75,19 +75,19 @@ p
 ### Ostia vs Small Incurrent
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Small_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Small_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Ostia Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Small Incurrent Canal Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Ostia_Diameter,Small_Incurrent_Canal_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Ostia_Diameter,Small_Incurrent_Canal_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Ostia Diameter (',"\U003BC",'m)')) +
@@ -104,19 +104,19 @@ p
 ### Ostia vs Prosopyle
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Prosopyle_Diameter ~ Ostia_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Prosopyle_Diameter ~ Ostia_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Ostia Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Prosopyle Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Ostia_Diameter,Prosopyle_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Ostia_Diameter,Prosopyle_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Ostia Diameter (',"\U003BC",'m)')) +
@@ -133,19 +133,19 @@ p
 ### Large Ex vs Med Ex
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Medium_Excurrent_Canal_Diameter ~ Large_Excurrent_Canal_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Medium_Excurrent_Canal_Diameter ~ Large_Excurrent_Canal_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Medium Excurrent Canal Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Large_Excurrent_Canal_Diameter,Medium_Excurrent_Canal_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Large_Excurrent_Canal_Diameter,Medium_Excurrent_Canal_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)')) +
@@ -161,19 +161,19 @@ p
 ### Large Ex vs Small Ex
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Small_Excurrent_Canal_Diameter ~ Large_Excurrent_Canal_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Small_Excurrent_Canal_Diameter ~ Large_Excurrent_Canal_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Small Excurrent Canal Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Large_Excurrent_Canal_Diameter,Small_Excurrent_Canal_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Large_Excurrent_Canal_Diameter,Small_Excurrent_Canal_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)')) +
@@ -189,19 +189,19 @@ p
 ### Large Ex vs Apopyle
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Apopyle_Diameter ~ Large_Excurrent_Canal_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Apopyle_Diameter ~ Large_Excurrent_Canal_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
 #note mu coding using unicode character 
-plot(d,
+plot(d.Demo,
      xlab = paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)'), 
      ylab = paste0('Apopyle Diameter (',"\U003BC",'m)'),
      pch = 19)
 abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Large_Excurrent_Canal_Diameter,Apopyle_Diameter)) + 
+p <- ggplot(data = d.Demo, aes(Large_Excurrent_Canal_Diameter,Apopyle_Diameter)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Large Excurrent Canal Diameter (',"\U003BC",'m)')) +
@@ -214,22 +214,16 @@ p
 
 
 
-### Large Ex vs Apopyle
+### Osculum vs Ex Velocity
 
 ### Basic stats using same method from ggplot2
-summary(d)
-d.lm <- lm(Excurrent_Velocity ~ Osculum_Diameter, data = d)
+summary(d.Demo)
+d.lm <- lm(Excurrent_Velocity ~ Osculum_Diameter, data = d.Demo)
 summary(d.lm)
 
 ### Plotting in Base R
-#note mu coding using unicode character 
-plot(d,
-     xlab = paste0('Osculum Diameter (',"\U003BC",'m)'), 
-     ylab = paste0('Excurrent Velocity (', 'mm/s)'),
-     pch = 19)
-abline(d.lm)
 ### Using ggplot2; assigned plot to variable
-p <- ggplot(data = d, aes(Osculum_Diameter,Excurrent_Velocity)) + 
+p <- ggplot(data = d.Demo, aes(Osculum_Diameter,Excurrent_Velocity)) + 
   geom_point() +
   #geom_point(mapping = aes(colour=species)) + #can color coordinate when you add species column
   xlab(paste0('Osculum Diameter (',"\U003BC",'m)')) +
@@ -238,4 +232,17 @@ p <- ggplot(data = d, aes(Osculum_Diameter,Excurrent_Velocity)) +
 
 ### Display plot
 p
+
+
+
+
+
+
+### Archaeo Velocity Calc
+
+Osculum_Diameter_Archaeo <- d.Archaeo[["Osculum_Diameter"]]
+mean(Osculum_Diameter_Archaeo)
+
+ExcurrentVelocityCalculated <- mean(Osculum_Diameter_Archaeo)*d.lm$coefficients[2]+d.lm$coefficients[1]
+ExcurrentVelocityCalculated
 
