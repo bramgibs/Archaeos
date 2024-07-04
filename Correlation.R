@@ -20,6 +20,7 @@ d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
 str(d.Archaeo)
 
 
+
 ### Large Incurrent Canal Diameter linear regression
 LInDiameter.lm <- lm(Large_Incurrent_Canal_Diameter ~ Ostia_Diameter, data = d.Demo)
 summary(LInDiameter.lm)
@@ -107,13 +108,60 @@ ExcurrentVelocity.Archaeo
 
 
 
+### Archaeo Volumetric Flow calculation
+
+OsculumArea.Archaeo <- d.Archaeo[["Osculum_Area"]]
+
+VolumetricOscularFlowRate.Archaeo <- OsculumArea.Archaeo * ExcurrentVelocity.Archaeo
+
+
+
+
 
 #### Data table of calculated values
 ID.Archaeo <- d.Archaeo[["ID"]]
 
 Species.Archaeo <- d.Archaeo[["Species"]]
 
-Archaeos_Calculations <- data.frame("ID" = c(ID.Archaeo), "Species" = c(Species.Archaeo), "Ostia_Diameter" = c(OstiaDiameter.Archaeo), "Large_Incurrent_Diameter" = c(LargeIncurrentDiameter.Archaeo), "Medium_Incurrent_Diameter" = c(MedIncurrentDiameter.Archaeo), "Small_Incurrent_Diameter" = c(SmallIncurrentDiameter.Archaeo), "Prosopyle_Diameter" = c(ProsopyleDiameter.Archaeo), "Apopyle_Diameter" = c(ApopyleDiameter.Archaeo), "Small_Excurrent_Canal_Diameter" = c(SmallExcurrentDiameter.Archaeo), "Medium_Excurrent_Canal_Diameter" = c(MedExcurrentDiameter.Archaeo), "Large_Excurrent_Canal_Diameter" = c(LargeExcurrentDiameter.Archaeo), "Osculum_Diameter" = c(OsculumDiameter.Archaeo), "Excurrent_Velocity" = c(ExcurrentVelocity.Archaeo))
+CupDiameter.Archaeo <- d.Archaeo[["Cup_Diameter"]]
+
+OuterWallThickness.Archaeo <- d.Archaeo[["Outer_Wall_Thickness"]]
+
+InnerWallThickness.Archaeo <- d.Archaeo[["Inner_Wall_Thickness"]]
+
+IntervallumWidth.Archaeo <- d.Archaeo[["Intervallum_Width"]]
+
+SurfaceArea.Archaeo <- d.Archaeo[["Surface_Area"]]
+
+OsaSaRatio.Archaeo <- d.Archaeo[["OSA_SA_Ratio"]]
+
+Height.Archaeo <- d.Archaeo[["Height"]]
+
+
+
+Archaeos_Calculations <- data.frame("ID" = c(ID.Archaeo), 
+                                    "Species" = c(Species.Archaeo), 
+                                    "Ostia_Diameter" = c(OstiaDiameter.Archaeo), 
+                                    "Large_Incurrent_Diameter" = c(LargeIncurrentDiameter.Archaeo), 
+                                    "Medium_Incurrent_Diameter" = c(MedIncurrentDiameter.Archaeo), 
+                                    "Small_Incurrent_Diameter" = c(SmallIncurrentDiameter.Archaeo), 
+                                    "Prosopyle_Diameter" = c(ProsopyleDiameter.Archaeo), 
+                                    "Apopyle_Diameter" = c(ApopyleDiameter.Archaeo), 
+                                    "Small_Excurrent_Canal_Diameter" = c(SmallExcurrentDiameter.Archaeo), 
+                                    "Medium_Excurrent_Canal_Diameter" = c(MedExcurrentDiameter.Archaeo), 
+                                    "Large_Excurrent_Canal_Diameter" = c(LargeExcurrentDiameter.Archaeo), 
+                                    "Osculum_Diameter" = c(OsculumDiameter.Archaeo), 
+                                    "Excurrent_Velocity" = c(ExcurrentVelocity.Archaeo), 
+                                    "Cup_Diameter" = c(CupDiameter.Archaeo),
+                                    "Outer_Wall_Thickness" = c(OuterWallThickness.Archaeo),
+                                    "Inner_Wall_Thickness" = c(InnerWallThickness.Archaeo),
+                                    "Intervallum_Width" = c(IntervallumWidth.Archaeo),
+                                    "Surface_Area" = c(SurfaceArea.Archaeo),
+                                    "Osculum_Area" = c(OsculumArea.Archaeo),
+                                    "OSA_SA_Ratio" = c(OsaSaRatio.Archaeo),
+                                    "Height" = c(Height.Archaeo),
+                                    "Volumetric_Oscular_Flow_Rate" = c(VolumetricOscularFlowRate.Archaeo)
+                                    )
 Archaeos_Calculations
 
 
@@ -121,3 +169,4 @@ Archaeos_Calculations
 write_xlsx(
   Archaeos_Calculations, "Archaeos_Calculations.xlsx",
   col_names = TRUE)
+
