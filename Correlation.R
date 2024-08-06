@@ -1,24 +1,25 @@
 ### Script for Correlation Calculation
-### May 2, 2024
 ### Prepared by P. Attanasio
 rm(list=ls())
 
-### Setting directory for '~/Downloads' but can adjust to project folder
+################################################################
+### BMG: This is a good start. One thing we should really consider is changing the variables here to match the math writeup (A_osculum/etc). Find and Replace All will be our friend here.  Might also potentially be good to combine the plot script and the correlation script so that summary statistics appear near plots. 
+
+
+### Setting directory
 getwd()
 setwd('~/Documents/GitHub/Archaeos')
 
 ### Getting packages set
-require(readxl)
-require(writexl)
-require(ggplot2)
-
+pkgs <- c('readxl','writexl','ggplot2')
+invisible(lapply(pkgs,library,character.only=T))
+  
 ### Read in data as tibble
 d.Demo <- read_xlsx('Demosponge Measurements.xlsx',col_names = T)
-str(d.Demo)
-
 d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
-str(d.Archaeo)
 
+################################################################
+### BMG: Beneath here are you just doing linear regressions between all combinations of parameters? If so, there may be a more concise method. 
 
 
 ### Large Incurrent Canal Area Per 1mm^3 linear regression
@@ -125,7 +126,8 @@ TotalThickness.Archaeo <- OuterWallThickness.Archaeo + InnerWallThickness.Archae
 
 
 
-
+################################################################
+### BMG: Let's tidy this up. We have a few options. I would recommend just adding new values to a dataframe(s) as they're created. Below are a bunch of what look like unit conversions (which is good). Rather than having the conversions in the formula, let's make a new column in our dataframe with the converted values. So if you go from um to mm, you'll have a column for each. 
 
 ### Archaeo Velocity per opening Calculation for Ostia
 SurfaceArea.Archaeo <- d.Archaeo[["Surface_Area"]]
@@ -216,7 +218,8 @@ Height.Archaeo <- d.Archaeo[["Height"]]
 # VolumetricOscularFlowRate.Archaeo <- VolumetricOscularFlowRate.Archaeo / 10000
 
 
-
+################################################################
+### BMG: If you take my suggestion above, then this section below will be already formatted and ready to write.
 
 
 ####Data table of calculated values
