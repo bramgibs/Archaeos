@@ -18,7 +18,7 @@ invisible(lapply(pkgs,library,character.only=T))
 d.Demo <- read_xlsx('Demosponge Measurements.xlsx',col_names = T)
 d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
 
-################################################################
+################################################################ CORELATION
 ### BMG: Beneath here are you just doing linear regressions between all combinations of parameters? If so, there may be a more concise method. 
 
 
@@ -35,32 +35,35 @@ LargeIncurrentAreaPer.Archaeo
 
 
 ### Medium Incurrent Canal Area Per 1mm^3 linear regression
-MInAreaPer.lm <- lm(Medium_Incurrent_Canal_Area_Per_1mm3 ~ Ostia_Area_Per_1mm3, data = d.Demo)
+MInAreaPer.lm <- lm(Medium_Incurrent_Canal_Area_Per_1mm3 ~ Large_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
 summary(MInAreaPer.lm)
 
 # Archaeo Medium Incurrent Canal Area calculation
-MedIncurrentAreaPer.Archaeo <- OstiaAreaPer.Archaeo*MInAreaPer.lm$coefficients[2]+MInAreaPer.lm$coefficients[1]
+MedIncurrentAreaPer.Archaeo <- LargeIncurrentAreaPer.Archaeo*MInAreaPer.lm$coefficients[2]+MInAreaPer.lm$coefficients[1]
 MedIncurrentAreaPer.Archaeo
 
 
 
 ### Small Incurrent Canal Area linear regression
-SInAreaPer.lm <- lm(Small_Incurrent_Canal_Area_Per_1mm3 ~ Ostia_Area_Per_1mm3, data = d.Demo)
+SInAreaPer.lm <- lm(Small_Incurrent_Canal_Area_Per_1mm3 ~ Medium_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
 summary(SInAreaPer.lm)
 
 # Archaeo Small Incurrent Canal Area calculation
-SmallIncurrentAreaPer.Archaeo <- OstiaAreaPer.Archaeo*SInAreaPer.lm$coefficients[2]+SInAreaPer.lm$coefficients[1]
+SmallIncurrentAreaPer.Archaeo <- MedIncurrentAreaPer.Archaeo*SInAreaPer.lm$coefficients[2]+SInAreaPer.lm$coefficients[1]
 SmallIncurrentAreaPer.Archaeo
 
 
 
 ### Prosopyle Area linear regression
-ProsopyleAreaPer.lm <- lm(Prosopyle_Area_Per_1mm3 ~ Ostia_Area_Per_1mm3, data = d.Demo)
+ProsopyleAreaPer.lm <- lm(Prosopyle_Area_Per_1mm3 ~ Small_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
 summary(ProsopyleAreaPer.lm)
 
 # Archaeo Prosopyle Area calculation
-ProsopyleAreaPer.Archaeo <- OstiaAreaPer.Archaeo*ProsopyleAreaPer.lm$coefficients[2]+ProsopyleAreaPer.lm$coefficients[1]
+ProsopyleAreaPer.Archaeo <- SmallIncurrentAreaPer.Archaeo*ProsopyleAreaPer.lm$coefficients[2]+ProsopyleAreaPer.lm$coefficients[1]
 ProsopyleAreaPer.Archaeo
+
+
+
 
 
 
@@ -77,22 +80,25 @@ MedExcurrentAreaPer.Archaeo
 
 
 ### Small Excurrent Canal Area linear regression
-SExAreaPer.lm <- lm(Small_Excurrent_Canal_Area_Per_1mm3 ~ Large_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
+SExAreaPer.lm <- lm(Small_Excurrent_Canal_Area_Per_1mm3 ~ Medium_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
 summary(SExAreaPer.lm)
 
 # Archaeo Small Excurrent Canal Area calculation
-SmallExcurrentAreaPer.Archaeo <- LargeExcurrentAreaPer.Archaeo*SExAreaPer.lm$coefficients[2]+SExAreaPer.lm$coefficients[1]
+SmallExcurrentAreaPer.Archaeo <- MedExcurrentAreaPer.Archaeo*SExAreaPer.lm$coefficients[2]+SExAreaPer.lm$coefficients[1]
 SmallExcurrentAreaPer.Archaeo
 
 
 
 ### Apopyle Area linear regression
-ApopyleAreaPer.lm <- lm(Apopyle_Area_Per_1mm3 ~ Large_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
+ApopyleAreaPer.lm <- lm(Apopyle_Area_Per_1mm3 ~ Small_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
 summary(ApopyleAreaPer.lm)
 
 # Archaeo Apopyle Area calculation
-ApopyleAreaPer.Archaeo <- LargeExcurrentAreaPer.Archaeo*ApopyleAreaPer.lm$coefficients[2]+ApopyleAreaPer.lm$coefficients[1]
+ApopyleAreaPer.Archaeo <- SmallExcurrentAreaPer.Archaeo*ApopyleAreaPer.lm$coefficients[2]+ApopyleAreaPer.lm$coefficients[1]
 ApopyleAreaPer.Archaeo
+
+
+
 
 
 
@@ -132,31 +138,31 @@ TotalThickness.Archaeo <- OuterWallThickness.Archaeo + InnerWallThickness.Archae
 ### Archaeo Velocity per opening Calculation for Ostia
 SurfaceArea.Archaeo <- d.Archaeo[["Surface_Area"]]
 
-OstiaVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((OstiaAreaPer.Archaeo/10^6) * (100 / (TotalThickness.Archaeo / 10^3)))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+OstiaVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((OstiaAreaPer.Archaeo/10^6) * (100 / (TotalThickness.Archaeo / 10^3)))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Large Incurrent Canal
-LargeIncurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((LargeIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+LargeIncurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((LargeIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Medium Incurrent Canal
-MedIncurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((MedIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+MedIncurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((MedIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Small Incurrent Canal
-SmallIncurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((SmallIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+SmallIncurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((SmallIncurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Prosopyle
-ProsopyleVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((ProsopyleAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+ProsopyleVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((ProsopyleAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Apopyle
-ApopyleVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((ApopyleAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+ApopyleVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((ApopyleAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Small Excurrent Canal
-SmallExcurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((SmallExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+SmallExcurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((SmallExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Medium Excurrent Canal
-MedExcurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((MedExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+MedExcurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((MedExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 ### Archaeo Velocity per opening Calculation for Large Excurrent Canal
-LargeExcurrentVelocity.Archaeo <- (ExcurrentVelocity.Archaeo / 10^6)   /   ((((LargeExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))
+LargeExcurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((LargeExcurrentAreaPer.Archaeo/10^6) * (100))  /  (100 / (TotalThickness.Archaeo / 10^3)) * 100)   /   ((((pi * ((OsculumDiameter.Archaeo/2)/1000)^2) / ((SurfaceArea.Archaeo / 10^8) *1000) * 100)  /  (100 / (TotalThickness.Archaeo / 10^3))) * 100))*1000000)
 
 
 
