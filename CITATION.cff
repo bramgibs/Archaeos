@@ -1,0 +1,17 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Data and R code associated with: The Impact of Soft
+  Tissue: Filter Feeding in Archaeocyatha
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Paolo
+    family-names: Attanasio
+  - given-names: Brandt
+    family-names: Gibson
+repository-code: 'https://github.com/PaoloUofT/Archaeos'
