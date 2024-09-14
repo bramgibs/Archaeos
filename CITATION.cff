@@ -12,6 +12,4 @@ type: software
 authors:
   - given-names: Paolo
     family-names: Attanasio
-  - given-names: Brandt
-    family-names: Gibson
 repository-code: 'https://github.com/PaoloUofT/Archaeos'

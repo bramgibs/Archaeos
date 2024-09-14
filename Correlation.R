@@ -3,9 +3,6 @@
 rm(list=ls())
 
 ################################################################
-### BMG: This is a good start. One thing we should really consider is changing the variables here to match the math writeup (A_osculum/etc). Find and Replace All will be our friend here.  Might also potentially be good to combine the plot script and the correlation script so that summary statistics appear near plots. 
-
-
 ### Setting directory
 getwd()
 setwd('~/Documents/GitHub/Archaeos')
@@ -18,13 +15,11 @@ invisible(lapply(pkgs,library,character.only=T))
 d.Demo <- read_xlsx('Demosponge Measurements.xlsx',col_names = T)
 d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
 
-################################################################ CORELATION
-### BMG: Beneath here are you just doing linear regressions between all combinations of parameters? If so, there may be a more concise method. 
+################################################################
 
 
 ### Large Incurrent Canal Area Per 1mm^3 linear regression
 LInAreaPer.lm <- lm(Large_Incurrent_Canal_Area_Per_1mm3 ~ Ostia_Area_Per_1mm3, data = d.Demo)
-summary(LInAreaPer.lm)
 
 # Archaeo Large Incurrent Canal Area Per 1mm^3 calculation
 OstiaAreaPer.Archaeo <- d.Archaeo[["Ostia_Area_Per_1mm3"]]
@@ -36,7 +31,6 @@ LargeIncurrentAreaPer.Archaeo
 
 ### Medium Incurrent Canal Area Per 1mm^3 linear regression
 MInAreaPer.lm <- lm(Medium_Incurrent_Canal_Area_Per_1mm3 ~ Large_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(MInAreaPer.lm)
 
 # Archaeo Medium Incurrent Canal Area calculation
 MedIncurrentAreaPer.Archaeo <- LargeIncurrentAreaPer.Archaeo*MInAreaPer.lm$coefficients[2]+MInAreaPer.lm$coefficients[1]
@@ -46,7 +40,6 @@ MedIncurrentAreaPer.Archaeo
 
 ### Small Incurrent Canal Area linear regression
 SInAreaPer.lm <- lm(Small_Incurrent_Canal_Area_Per_1mm3 ~ Medium_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(SInAreaPer.lm)
 
 # Archaeo Small Incurrent Canal Area calculation
 SmallIncurrentAreaPer.Archaeo <- MedIncurrentAreaPer.Archaeo*SInAreaPer.lm$coefficients[2]+SInAreaPer.lm$coefficients[1]
@@ -56,7 +49,6 @@ SmallIncurrentAreaPer.Archaeo
 
 ### Prosopyle Area linear regression
 ProsopyleAreaPer.lm <- lm(Prosopyle_Area_Per_1mm3 ~ Small_Incurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(ProsopyleAreaPer.lm)
 
 # Archaeo Prosopyle Area calculation
 ProsopyleAreaPer.Archaeo <- SmallIncurrentAreaPer.Archaeo*ProsopyleAreaPer.lm$coefficients[2]+ProsopyleAreaPer.lm$coefficients[1]
@@ -69,7 +61,6 @@ ProsopyleAreaPer.Archaeo
 
 ### Medium Excurrent Canal Area linear regression
 MExAreaPer.lm <- lm(Medium_Excurrent_Canal_Area_Per_1mm3 ~ Large_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(MExAreaPer.lm)
 
 # Archaeo Medium Excurrent Canal Area calculation
 LargeExcurrentAreaPer.Archaeo <- d.Archaeo[["Large_Excurrent_Canal_Area_Per_1mm3"]]
@@ -81,7 +72,6 @@ MedExcurrentAreaPer.Archaeo
 
 ### Small Excurrent Canal Area linear regression
 SExAreaPer.lm <- lm(Small_Excurrent_Canal_Area_Per_1mm3 ~ Medium_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(SExAreaPer.lm)
 
 # Archaeo Small Excurrent Canal Area calculation
 SmallExcurrentAreaPer.Archaeo <- MedExcurrentAreaPer.Archaeo*SExAreaPer.lm$coefficients[2]+SExAreaPer.lm$coefficients[1]
@@ -91,7 +81,6 @@ SmallExcurrentAreaPer.Archaeo
 
 ### Apopyle Area linear regression
 ApopyleAreaPer.lm <- lm(Apopyle_Area_Per_1mm3 ~ Small_Excurrent_Canal_Area_Per_1mm3, data = d.Demo)
-summary(ApopyleAreaPer.lm)
 
 # Archaeo Apopyle Area calculation
 ApopyleAreaPer.Archaeo <- SmallExcurrentAreaPer.Archaeo*ApopyleAreaPer.lm$coefficients[2]+ApopyleAreaPer.lm$coefficients[1]
@@ -104,7 +93,6 @@ ApopyleAreaPer.Archaeo
 
 ### Excurrent Velocity linear regression
 ExVelocity.lm <- lm(Excurrent_Velocity ~ Osculum_Diameter, data = d.Demo)
-summary(ExVelocity.lm)
 
 ### Archaeo velocity calculation
 OsculumDiameter.Archaeo <- d.Archaeo[["Osculum_Diameter"]]
@@ -133,8 +121,6 @@ TotalThickness.Archaeo <- OuterWallThickness.Archaeo + InnerWallThickness.Archae
 
 
 ################################################################
-### BMG: Let's tidy this up. We have a few options. I would recommend just adding new values to a dataframe(s) as they're created. Below are a bunch of what look like unit conversions (which is good). Rather than having the conversions in the formula, let's make a new column in our dataframe with the converted values. So if you go from um to mm, you'll have a column for each. 
-
 ### Archaeo Velocity per opening Calculation for Ostia
 SurfaceArea.Archaeo <- d.Archaeo[["Surface_Area"]]
 
@@ -166,8 +152,7 @@ LargeExcurrentVelocity.Archaeo <- ((ExcurrentVelocity.Archaeo / 10^6)   /   ((((
 
 
 
-
-
+################################################################
 #### Assign measured Archaeos data to variables
 ID.Archaeo <- d.Archaeo[["ID"]]
 
@@ -193,41 +178,7 @@ Height.Archaeo <- d.Archaeo[["Height"]]
 
 
 
-
-
-#### Convert um to cm
-# OstiaDiameter.Archaeo <- OstiaDiameter.Archaeo / 10000
-# OstiaLintelWidth.Archaeo <- OstiaLintelWidth.Archaeo / 10000
-# OstiaArea.Archaeo <- OstiaArea.Archaeo / 10000
-# OstiaAreaPer.Archaeo <- OstiaAreaPer.Archaeo / 10000
-# LargeIncurrentAreaPer.Archaeo <- LargeIncurrentAreaPer.Archaeo / 10000
-# MedIncurrentAreaPer.Archaeo <- MedIncurrentAreaPer.Archaeo / 10000
-# SmallIncurrentAreaPer.Archaeo <- SmallIncurrentAreaPer.Archaeo / 10000
-# ProsopyleAreaPer.Archaeo <- ProsopyleAreaPer.Archaeo / 10000
-# ApopyleAreaPer.Archaeo <- ApopyleAreaPer.Archaeo / 10000
-# SmallExcurrentAreaPer.Archaeo <- SmallExcurrentAreaPer.Archaeo / 10000
-# MedExcurrentAreaPer.Archaeo <- MedExcurrentAreaPer.Archaeo / 10000
-# LargeExcurrentDiameter.Archaeo <- LargeExcurrentDiameter.Archaeo / 10000
-# LargeExcurrentLintelWidth.Archaeo <- LargeExcurrentLintelWidth.Archaeo / 10000
-# LargeExcurrentArea.Archaeo <- LargeExcurrentArea.Archaeo / 10000
-# LargeExcurrentAreaPer.Archaeo <- LargeExcurrentAreaPer.Archaeo / 10000
-# OsculumDiameter.Archaeo <- OsculumDiameter.Archaeo / 10000
-# ExcurrentVelocity.Archaeo <- ExcurrentVelocity.Archaeo / 10000
-# CupDiameter.Archaeo <- CupDiameter.Archaeo / 10000
-# OuterWallThickness.Archaeo <- OuterWallThickness.Archaeo / 10000
-# InnerWallThickness.Archaeo <- InnerWallThickness.Archaeo / 10000
-# IntervallumWidth.Archaeo <- IntervallumWidth.Archaeo / 10000
-# SurfaceArea.Archaeo <- SurfaceArea.Archaeo / 10000
-# OsculumArea.Archaeo <- OsculumArea.Archaeo / 10000
-# OsaSaRatio.Archaeo <- OsaSaRatio.Archaeo
-# Height.Archaeo <- Height.Archaeo / 10000
-# VolumetricOscularFlowRate.Archaeo <- VolumetricOscularFlowRate.Archaeo / 10000
-
-
 ################################################################
-### BMG: If you take my suggestion above, then this section below will be already formatted and ready to write.
-
-
 ####Data table of calculated values
 Archaeos_Calculations <- data.frame("ID" = c(ID.Archaeo), 
                                     "Species" = c(Species.Archaeo), 

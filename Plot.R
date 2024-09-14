@@ -11,6 +11,7 @@ setwd('~/Documents/GitHub/Archaeos')
 require(readxl)
 require(ggplot2)
 require(ggtext)
+require(ggpubr)
 
 
 ### Read in data as tibble
@@ -33,7 +34,7 @@ p <- ggplot(data = d.Archaeo, aes(SurfaceArea.Archaeo,OsculumArea.Archaeo)) +
   xlab(expression(paste('log Surface Area (c', m^{2},')'))) +
   ylab(expression(paste('log Osculum Area (c', m^{2},')'))) +
   geom_smooth(formula = y~x, method = 'lm', alpha = .1, color='#0000004D') +
-  theme(legend.text=element_text(face = "italic"))  
+  theme(legend.text=element_text(face = "italic"))
 # Log10 scale both X and Y axes
 p <- p + scale_x_continuous(trans='log10', labels = scales::comma) +
   scale_y_continuous(trans='log10', labels = scales::comma)
