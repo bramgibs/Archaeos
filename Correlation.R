@@ -19,6 +19,8 @@ d.Archaeo <- read_xlsx('Archaeos Measurements.xlsx',col_names = T)
 
 
 ### Large Incurrent Canal Area Per 1mm^3 linear regression
+
+
 LInAreaPer.lm <- lm(Large_Incurrent_Canal_Area_Per_1mm3 ~ Ostia_Area_Per_1mm3, data = d.Demo)
 
 # Archaeo Large Incurrent Canal Area Per 1mm^3 calculation
