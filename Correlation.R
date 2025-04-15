@@ -1,7 +1,7 @@
 ### Script for Correlation Calculation
 ### Prepared by P. Attanasio
 rm(list=ls())
-#testing
+
 ################################################################
 ### Setting directory
 getwd()
