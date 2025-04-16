@@ -27,6 +27,9 @@ xlab="Heights (μm)",ylab="# of Specimens",xaxt="n", col="darkblue",
 border="black", breaks=20)
 axis(side=1,at=seq(5000,50000,by=2500),las=1)
 
+
+## BMG: Okay, this is next bit is good. I wonder if there's pro's to keeping everything within the same dataframe. It might also not be bad to fold the min, max, etc. into the actaully plotting bits. That might make it easier to read. 
+
 #setting variable to create osculum area
 osculumarea=pi*((d$dia.mm/2)^2)
 
@@ -38,15 +41,16 @@ bys = (maxx-minx)/8
 
 hist(osculumarea,main="Osculum Area",
      xlab=expression("Osculum Area (mm"^"2" ~")"),ylab="# of Specimens", col="maroon", 
-     border="black", xaxt ='n',breaks=30)
+     border="black", xaxt ='n',breaks=60)
 axis(side=1,at=seq(minx,maxx,by=bys),las=1)
 
+## BMG: Make sure to have a key to variable somewhere in here. 
 
 #setting variables to make this formula easier to write
 r.mm=d$cupdia.mm/2
 h.mm=d$Height/1000
 
-#creating surface area formula
+#creating surface area formula for cone
 surfacearea=(pi*r.mm)*(r.mm + sqrt((h.mm^2)+(r.mm^2)))
 
 #omitting nulls in range, setting them as N/A
@@ -60,7 +64,7 @@ hist(surfacearea,main="Surface Area",
      border="black", xaxt ='n',breaks=30)
 axis(side=1,at=seq(miny,maxy,by=bysy),las=1)
 
-#lets compare it with the original values he got
+#lets compare it with the original values Paolo got
 
 par(mfrow = c(1,2))
     hist(d$Surface_Area,main="Surface Area",
@@ -129,3 +133,4 @@ model <- lm(log(osculumarea) ~ log(surfacearea))
 curve(exp(coef(model)[1]) * x^coef(model)[2],
       add = TRUE, col = "red", lwd = 2)
 
+## try abline(lm(log10(y)~log10(x)))
